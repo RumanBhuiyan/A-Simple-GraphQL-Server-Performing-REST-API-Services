@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-//Defining the schema that every mode of insertion of data will follow
+
+//Defining the schema that every model of insertion of data will follow
 const PersonSchema = mongoose.Schema({
   name: String,
   roll: Number,
@@ -18,16 +19,23 @@ const Person = mongoose.model("graphql-person", PersonSchema);
 // });
 // person.save();
 
-//Fetching Data from Mongodb and assigning it to an array,do the job same it because
-//find method doesn't work properly inside resolver functions,it returns null array
 let data = [];
-Person.find(function (error, names) {
-  if (error) {
-    console.log(error);
-  } else {
-    data = names;
-  }
-});
+
+new Promise((resolve, reject) => {
+  Person.find(function (error, names) {
+    if (error) {
+      console.log(error);
+      reject();
+    } else {
+      data = names;
+      resolve();
+    }
+  });
+})
+  .then(() => {
+    console.log("Data fetched Successfully");
+  })
+  .catch((error) => console.log(error));
 
 const resolvers = {
   Query: {
