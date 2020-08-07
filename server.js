@@ -1,4 +1,4 @@
-//Very Simple Graphql Server of mine Alternative to REST API
+//Very Simple Graphql Server  Alternative to REST API
 const { ApolloServer } = require("apollo-server-express");
 const express = require("express");
 const bodyParser = require("body-parser");
